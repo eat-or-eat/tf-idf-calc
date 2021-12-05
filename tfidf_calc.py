@@ -31,22 +31,10 @@ def calc_tfidf(corpus):
     return tf_idf_dic
 
 
-# 利用tfidf显找出个领域的top关键词
-def tf_idf_topK(tf_idf_dic, classes=[], K=5, print_word=True):
-    topK_dic = {}
-    for index, words_dic in tf_idf_dic.items():
-        word_list = sorted(words_dic.items(), key=lambda x: x[1], reverse=True)
-        topK_dic[index] = word_list[:K]
-        if print_word:
-            print(index, classes[index])
-            for i in range(K):
-                print(word_list[i])
-            print('-----------')
-    return topK_dic
 
 
-def main(K=10):
-    dir_path = r"data/"
+def main():
+    dir_path = "./data"
     corpus = []
     classes = []
     for path in os.listdir(dir_path):
@@ -56,11 +44,9 @@ def main(K=10):
             classes.append(os.path.basename(path))
     corpus = [jieba.lcut(text) for text in corpus]
     tfidf = calc_tfidf(corpus)
-    tf_idf_topK(tfidf, classes, K)
     return tfidf
 
 
 if __name__ == "__main__":
-    # 测试用例
-    # get_tfidf_dic = main()
-    main()
+    get_tfidf_dic = main()
+    print(get_tfidf_dic)
